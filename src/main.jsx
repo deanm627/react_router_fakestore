@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './routes/root';
+import Root, { loader as rootLoader } from './routes/root';
 import ErrorPage from './error-page';
 import Products, { loader as productLoader } from './routes/products';
 import ProductDetail, { loader as productDetailLoader } from './routes/product-detail';
+import ProductsByCat, { loader as productCatLoader } from './routes/products-by-cat';
 import './index.css'
 
 const router = createBrowserRouter([
@@ -12,19 +13,25 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
+    loader: rootLoader,
     children: [
       {
         path: "/",
         element: <Products />,
         loader: productLoader,
       },
+      {
+        path: 'category/:category',
+        element: <ProductsByCat />,
+        loader: productCatLoader,
+      },
+      {
+        path: "products/:productId",
+        element: <ProductDetail />,
+        errorElement: <ErrorPage />,
+        loader: productDetailLoader
+      },
     ],
-  },
-  {
-    path: "products/:productId",
-    element: <ProductDetail />,
-    errorElement: <ErrorPage />,
-    loader: productDetailLoader
   },
 ]);
 

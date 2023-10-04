@@ -18,13 +18,13 @@ const OuterWrapper = styled.div`
     }
 `
 
-export async function loader() {
-    const productList = await fetch('https://fakestoreapi.com/products').then(response => response.json());
+export async function loader({ params }) {
+    const productList = await fetch(`https://fakestoreapi.com/products/category/${params.category}`).then(response => response.json());
     console.log(productList);
     return { productList };
 }
 
-export default function Products() {
+export default function ProductsByCat() {
     const { productList } = useLoaderData();
     return (
         <>
