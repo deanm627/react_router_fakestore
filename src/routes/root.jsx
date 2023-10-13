@@ -1,5 +1,19 @@
 import { useLoaderData, Link, Outlet } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import Cart from '../components/Cart';
+import { CartContext } from '../context/cart';
 import styled from 'styled-components';
+
+const CartWrapper = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 75px;
+
+    .cartModalButton {
+        background: ivory;
+        color: black;
+    }
+`
 
 const OuterWrapper = styled.div`
     display: flex;
@@ -27,10 +41,20 @@ export async function loader() {
 
 export default function Root() {
     const { categories } = useLoaderData();
+    const { cartItems, addToCart } = useContext(CartContext)
+    const [showModal, setShowModal] = useState(false);
+
+    const toggle = () => {
+        setShowModal(!showModal)
+    }
 
     return (
         <>
             <h1>Fake Store</h1>
+            <CartWrapper>
+                {!showModal && <button className='cartModalButton' onClick={toggle}>Cart ({cartItems.length})</button>}
+                <Cart showModal={showModal} toggle={toggle}/>
+            </CartWrapper>
             <OuterWrapper>
                 <div id="category_list">
                     <ul>

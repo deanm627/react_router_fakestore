@@ -9,7 +9,7 @@ export default function ProductDetail() {
     const { product } = useLoaderData();
     return (
         <>
-            <Link to="/">Back to Product List</Link>
+            <Link to={`/category/${product.category}`}>Back</Link>
             <p>{product.title}</p>
             <p>{product.description}</p>
             <p>${product.price}</p>

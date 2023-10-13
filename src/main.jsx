@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root, { loader as rootLoader } from './routes/root';
+import Root, {loader as rootLoader} from './routes/root';
 import ErrorPage from './error-page';
 import Products, { loader as productLoader } from './routes/products';
 import ProductDetail, { loader as productDetailLoader } from './routes/product-detail';
 import ProductsByCat, { loader as productCatLoader } from './routes/products-by-cat';
+import { CartProvider } from './context/cart';
 import './index.css'
 
 const router = createBrowserRouter([
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     loader: rootLoader,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Products />,
         loader: productLoader,
       },
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
   </React.StrictMode>,
 )
